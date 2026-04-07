@@ -3,13 +3,13 @@ This project implements a custom Link State Intra-AS routing protocol designed f
 
 Core Features:
 
-Mandatory Policy Enforcement: Guaranteed 100% inspection rate by forcing all outbound traffic through the SA.
+1. Mandatory Policy Enforcement: Guaranteed 100% inspection rate by forcing all outbound traffic through the SA.
 
-Non-Bypass Routing: Logic prevents "shortcut" routes through gateways before the inspection point is reached.
+2. Non-Bypass Routing: Logic prevents "shortcut" routes through gateways before the inspection point is reached.
 
-Dual-Phase Path Optimization: Uses a constrained Dijkstra approach to find the shortest secure path.
+3. Dual-Phase Path Optimization: Uses a constrained Dijkstra approach to find the shortest secure path.
 
-Automated Forwarding Tables: Generates verified hop-by-hop instructions for all non-gateway routers in the Autonomous System.
+4. Automated Forwarding Tables: Generates verified hop-by-hop instructions for all non-gateway routers in the Autonomous System.
 
 Technical Stack:
 
