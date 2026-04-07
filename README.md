@@ -21,7 +21,9 @@ Data Structures: PriorityQueues, Adjacency Matrices, TreeSets (for deterministic
 
 The Routing Logic:
 The system calculates the total cost for a secure path using the following logic:
+
 TotalCost = dist(Source→SA) + dist(SA→Gateway)
 
 Phase 1 (Inbound to SA): The algorithm runs from the source to the SA, treating all gateways as unreachable "sink nodes" to prevent policy violations.
+
 Phase 2 (Outbound to Gateway): A second pass calculates the most efficient exit route from the SA to the target gateway.
