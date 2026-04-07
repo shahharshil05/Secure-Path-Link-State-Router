@@ -2,6 +2,7 @@ Intra-AS Routing with Mandatory Security Inspection:
 This project implements a custom Link State Intra-AS routing protocol designed for high-security environments. Unlike standard protocols that optimize purely for cost, Secure-Path enforces a strict security policy: every datagram must undergo inspection at a designated Security Agent (SA) before exiting the system through a gateway.
 
 Core Features:
+
 Mandatory Policy Enforcement: Guaranteed 100% inspection rate by forcing all outbound traffic through the SA.
 
 Non-Bypass Routing: Logic prevents "shortcut" routes through gateways before the inspection point is reached.
