@@ -1,52 +1,28 @@
-Policy-Enforced AS Routing
-This project implements a core functionality of a Link State Intra-AS routing algorithm with a specific focus on Security Policy Enforcement. While standard routing protocols prioritize the shortest path based solely on cost, this implementation ensures that all outbound traffic undergoes a mandatory security inspection before exiting the Autonomous System (AS).
+Intra-AS Routing with Mandatory Security Inspection:
+This project implements a custom Link State Intra-AS routing protocol designed for high-security environments. Unlike standard protocols that optimize purely for cost, Secure-Path enforces a strict security policy: every datagram must undergo inspection at a designated Security Agent (SA) before exiting the system through a gateway.
 
-The Problem
-In modern network security, organizations often require all datagrams leaving an internal network to pass through a specific inspection point—a Security Agent (SA)—to prevent data exfiltration or unauthorized access.
+Core Features:
+Mandatory Policy Enforcement: Guaranteed 100% inspection rate by forcing all outbound traffic through the SA.
 
-This implementation enforces three critical policies:
+Non-Bypass Routing: Logic prevents "shortcut" routes through gateways before the inspection point is reached.
 
-Mandatory Inspection: Every datagram leaving the AS must pass through the SA before it reaches an exit gateway.
+Dual-Phase Path Optimization: Uses a constrained Dijkstra approach to find the shortest secure path.
 
-Intermediate Node Constraint: An exit gateway cannot serve as an intermediate hop on the way to the SA.
+Automated Forwarding Tables: Generates verified hop-by-hop instructions for all non-gateway routers in the Autonomous System.
 
-Optimized Exit: Once a packet has been inspected by the SA, it must take the shortest path to its designated exit gateway.
+Technical Stack:
 
-Implementation Details
-The system processes a weighted directed graph representing the AS topology and generates optimized forwarding tables for all non-gateway routers.
+Language: Java (JDK 11+)
 
-Language: Java
+Algorithm: Modified Dijkstra’s (Shortest Path First)
 
-Algorithm: Modified Dijkstra's Algorithm
+Data Structures: PriorityQueues, Adjacency Matrices, TreeSets (for deterministic hop sorting)
 
-Logic: * The algorithm runs Dijkstra from the source to the SA while treating all gateways as "dead ends" to ensure no traffic bypasses inspection.
+The Routing Logic:
 
-A second Dijkstra pass calculates the shortest path from the SA to all available gateways.
+The system calculates the total cost for a secure path using the following logic:
 
-These results are combined to form a final forwarding table that minimizes total cost while adhering 100% to security constraints.
+TotalCost=dist(Source→SA)+dist(SA→Gateway)
+Phase 1 (Inbound to SA): The algorithm runs from the source to the SA, treating all gateways as unreachable "sink nodes" to prevent policy violations.
 
-How It Works
-Input Format
-
-The program reads from standard input in the following order:
-
-n: The number of routers in the AS.
-
-Adjacency Matrix: An n×n matrix representing edge weights (use -1 for no connection).
-
-Gateways: A list of router indices acting as exit points.
-
-SA: The index of the Security Agent router.
-
-Output
-
-The program generates a forwarding table for every non-gateway router, detailing:
-
-To: The destination gateway.
-
-Cost: The total optimized cost from source → SA → Gateway.
-
-Next Hop: The immediate neighbor(s) to reach the SA or the gateway.
-
-Why This Matters
-Standard shortest-path algorithms are often insufficient for secure enterprise environments. This project demonstrates the ability to engineer custom routing logic that balances network efficiency with security compliance, a core requirement for Junior Network and Security Operations roles.
+Phase 2 (Outbound to Gateway): A second pass calculates the most efficient exit route from the SA to the target gateway.
